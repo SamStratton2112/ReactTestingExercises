@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Carousel.css";
 import image1 from "./image1.jpg";
 import image2 from "./image2.jpg";
@@ -9,28 +9,38 @@ function Carousel(props) {
   const [cardIdx, setCardIdx] = useState(0);
   const card = props.cardData[cardIdx];
   const total = props.cardData.length;
-  const goForward = () => setCardIdx(cardIdx + 1);
-
+  const goForward = () => {
+    setCardIdx(cardIdx + 1)
+  };
+  const goBack = () => {
+    setCardIdx(cardIdx - 1)
+  };
   return (
     <div className="Carousel">
       <h1>{props.title}</h1>
       <div className="Carousel-main">
+        {/* if cardIdx is not 0 return icon, else return null */}
+        {cardIdx!==0?
         <i
-          className="fas fa-chevron-circle-left fa-2x"
-          onClick={goForward}
-          data-testid="left-arrow"
-        />
+        className="fas fa-chevron-circle-left fa-2x"
+        onClick={goBack}
+        data-testid="left-arrow" />:
+        null
+        }
         <Card
           caption={card.caption}
           src={card.src}
-          currNum={cardIdx + 1}
+          currNum={cardIdx +1}
           totalNum={total}
         />
+        {/* if cardIdx is 2 then return null, else return icon */}
+        {cardIdx===2?
+        null:
         <i
           className="fas fa-chevron-circle-right fa-2x"
           onClick={goForward}
           data-testid="right-arrow"
-        />
+        />}
       </div>
     </div>
   );
